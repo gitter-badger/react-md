@@ -2,6 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import classnames from 'classnames';
 
+/**
+ * Avatars can be used to symbolize people or objects.
+ */
 export default class Avatar extends Component {
   constructor(props) {
     super(props);
@@ -10,14 +13,49 @@ export default class Avatar extends Component {
   }
 
   static propTypes = {
+    /**
+     * The optional className for the avatar.
+     */
     className: PropTypes.string,
+
+    /**
+     * The optional image source for an avatar (if it is an image). This will automatically
+     * set the width and size to the avatar size.
+     */
     src: PropTypes.string,
+
+    /**
+     * The optional alt attribute when the avatar is an image.
+     */
     alt: PropTypes.string,
+
+    /**
+     * The optional `FontIcon` to use in the avatar.
+     */
     icon: PropTypes.node,
+
+    /**
+     * A letter you would like to display in the avatar.
+     */
     children: PropTypes.string,
+
+    /**
+     * A boolean that enables adding a random material design color to the
+     * avatar from one of the `suffixes`.
+     */
     random: PropTypes.bool,
-    suffixes: PropTypes.arrayOf(PropTypes.string),
+
+    /**
+     * An optional suffix to apply to the avatar. This will style the avatar
+     * with one of the material design colors. This should most likely be one
+     * of the `suffixes`.
+     */
     suffix: PropTypes.string,
+
+    /**
+     * One of the available suffixes to use for the randomly coloring the avatar.
+     */
+    suffixes: PropTypes.arrayOf(PropTypes.string),
   };
 
   static defaultProps = {
