@@ -66,7 +66,7 @@
   position: relative;
   transition: background $md-transition-time;
 
-  &:hover {
+  &:hover:not[disabled] {
     background: if($md-light-theme, $md-light-theme-divider-color, $md-dark-theme-divider-color);
   }
 

@@ -116,6 +116,18 @@ export default class ListItem extends Component {
     }
   };
 
+  handleMouseOver = () => {
+    if(this.props.disabled) { return; }
+
+    this.setState({ hover: true });
+  };
+
+  handleMouseLeave = () => {
+    if(this.props.disabled) { return; }
+
+    this.setState({ hover: false });
+  };
+
   render() {
     const { hover } = this.state;
     const {
@@ -179,8 +191,8 @@ export default class ListItem extends Component {
       <TransitionGroup
         component="li"
         className={classnames('md-list-item', containerClassName, { hover })}
-        onMouseOver={() => this.setState({ hover: true })}
-        onMouseLeave={() => this.setState({ hover: false })}
+        onMouseOver={this.handleMouseOver}
+        onMouseLeave={this.handleMouseLeave}
       >
         {content}
         {children}
