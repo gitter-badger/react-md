@@ -6,6 +6,13 @@ import FontIcon from '../FontIcons';
 import Ink from '../Inks';
 import Tooltip from '..//Tooltips';
 
+/**
+ * An icon button is just a simple wrapper of a `FontIcon\` inside of a button.
+ * It includes an ink effect on touch/click and includes a tooltip if a label is
+ * given.
+ *
+ * > Depends on Ink, FontIcon, and Tooltip
+ */
 export default class IconButton extends Component {
   constructor(props) {
     super(props);
@@ -14,20 +21,62 @@ export default class IconButton extends Component {
   }
 
   static propTypes = {
+    /**
+     * The className to use for the `FontIcon`.
+     */
     iconClassName: PropTypes.string,
+
+    /**
+     * The className for the button.
+     */
     className: PropTypes.string,
+
+    /**
+     * Any children used to render the `FontIcon`.
+     */
     children: PropTypes.node,
+
+    /**
+     * An optional onClick function.
+     */
     onClick: PropTypes.func,
+
+    /**
+     * The optional tooltip text to display on hover or touch hold.
+     */
     tooltip: PropTypes.string,
+
+    /**
+     * An optional className to apply to the tooltip container (which wraps
+     * around the entire `IconButton`).
+     */
     tooltipClassName: PropTypes.string,
+
+    /**
+     * The position for the tooltip.
+     */
     tooltipPosition: PropTypes.string,
+
+    /**
+     * An optional href to use for the button. It will * be turned into a link
+     * component if this property is given.
+     */
     href: PropTypes.string,
+
+    /**
+     * The button type.
+     */
     type: PropTypes.string,
+
+    /**
+     * Boolean if the button is disabled.
+     */
     disabled: PropTypes.bool,
   };
 
   static defaultProps = {
     type: 'button',
+    tooltipPosition: 'bottom',
   };
 
   render() {

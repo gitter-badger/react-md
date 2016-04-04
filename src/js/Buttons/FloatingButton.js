@@ -4,6 +4,13 @@ import classnames from 'classnames';
 
 import IconButton from './IconButton';
 
+/**
+ * Floating action buttons are used for a promoted action. They are distinguished by
+ * a circled icon floating above the UI and have motion behaviors that include
+ * morphing, launching, and a transferring anchor point.
+ *
+ * > Depends on Ink, IconButton
+ */
 export default class FloatingButton extends Component {
   constructor(props) {
     super(props);
@@ -33,6 +40,7 @@ export default class FloatingButton extends Component {
       iconClassName,
       ...props,
     } = this.props;
+
     return (
       <IconButton
         {...props}
