@@ -3,8 +3,8 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import classnames from 'classnames';
 
 import FontIcon from '../FontIcons';
-import Ink from '../Inks';
-import Tooltip from '..//Tooltips';
+import injectInk from '../Inks';
+import injectTooltip from '../Tooltips';
 
 /**
  * An icon button is just a simple wrapper of a `FontIcon\` inside of a button.
@@ -13,7 +13,7 @@ import Tooltip from '..//Tooltips';
  *
  * > Depends on Ink, FontIcon, and Tooltip
  */
-export default class IconButton extends Component {
+class IconButton extends Component {
   constructor(props) {
     super(props);
 
@@ -44,18 +44,15 @@ export default class IconButton extends Component {
     /**
      * The optional tooltip text to display on hover or touch hold.
      */
-    tooltip: PropTypes.string,
 
     /**
      * An optional className to apply to the tooltip container (which wraps
      * around the entire `IconButton`).
      */
-    tooltipClassName: PropTypes.string,
 
     /**
      * The position for the tooltip.
      */
-    tooltipPosition: PropTypes.string,
 
     /**
      * An optional href to use for the button. It will * be turned into a link
@@ -72,6 +69,17 @@ export default class IconButton extends Component {
      * Boolean if the button is disabled.
      */
     disabled: PropTypes.bool,
+
+    // Injected from injectInk
+    ink: PropTypes.node,
+
+    // Inject from injectTooltip
+    tooltip: PropTypes.node,
+
+    // Consumed from injectTooltip
+    tooltipLabel: PropTypes.string,
+    tooltipPosition: PropTypes.string,
+    tooltipDelay: PropTypes.number,
   };
 
   static defaultProps = {
@@ -87,9 +95,8 @@ export default class IconButton extends Component {
       href,
       type,
       tooltip,
-      tooltipClassName,
-      tooltipPosition,
       disabled,
+      ink,
       ...props,
     } = this.props;
 
@@ -107,23 +114,11 @@ export default class IconButton extends Component {
 
     let displayedChildren = children;
     if(!(children && children.type && children.type === FontIcon)) {
-      displayedChildren = <FontIcon iconClassName={iconClassName}>{children}</FontIcon>;
+      displayedChildren = <FontIcon key="icon" iconClassName={iconClassName}>{children}</FontIcon>;
     }
 
-    const wrappedButton = (
-      <Ink disabled={disabled}>
-        {React.createElement(href ? 'a' : 'button', btnProps, displayedChildren)}
-      </Ink>
-    );
-
-    if(tooltip) {
-      return (
-        <Tooltip text={tooltip} position={tooltipPosition} className={tooltipClassName} selector={btnProps.className}>
-          {wrappedButton}
-        </Tooltip>
-      );
-    } else {
-      return wrappedButton;
-    }
+    return React.createElement(href ? 'a' : 'button', btnProps, [ink, displayedChildren, tooltip]);
   }
 }
+
+export default injectTooltip(injectInk(IconButton));

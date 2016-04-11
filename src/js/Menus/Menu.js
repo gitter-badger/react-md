@@ -5,6 +5,15 @@ import CSSTransitionGroup from 'react-addons-css-transition-group';
 import classnames from 'classnames';
 import { List } from '../Lists';
 
+import { onOutsideClick } from '../utils';
+
+/**
+ * The Menu component is a controlled component. It requires a boolean `isOpen`
+ * to determinte its state.
+ *
+ * Menus allow users to take an action by selecting from a list of choices revealed
+ * upon opening a temporary, new sheet of material.
+ */
 export default class Menu extends Component {
   constructor(props) {
     super(props);
@@ -17,6 +26,7 @@ export default class Menu extends Component {
     TOP_LEFT: 'tl',
     BOTTOM_RIGHT: 'br',
     BOTTOM_LEFT: 'bl',
+    BELOW: 'below',
   };
 
   static propTypes = {
@@ -30,7 +40,6 @@ export default class Menu extends Component {
     position: PropTypes.oneOf(Object.keys(Menu.Positions).map(key => Menu.Positions[key])),
     close: PropTypes.func,
     autoclose: PropTypes.bool,
-    below: PropTypes.bool,
     cascading: PropTypes.bool,
     expanderIconChildren: PropTypes.node,
     expanderIconClassName: PropTypes.string,
@@ -44,12 +53,11 @@ export default class Menu extends Component {
 
   componentDidUpdate(prevProps) {
     const { isOpen, autoclose, close } = this.props;
-    if(close && autoclose && isOpen && !prevProps.isOpen) {
+    if(!close || !autoclose || isOpen === prevProps.isOpen) { return; }
+    if(isOpen) {
       window.addEventListener('click', this.closeOnOutsideClick);
-    } else if(!isOpen && prevProps.isOpen) {
-      if(close && autoclose) {
-        window.removeEventListener('click', this.closeOnOutsideClick);
-      }
+    } else {
+      window.removeEventListener('click', this.closeOnOutsideClick);
     }
   }
 
@@ -57,16 +65,7 @@ export default class Menu extends Component {
     window.removeEventListener('click', this.closeOnOutsideClick);
   }
 
-  closeOnOutsideClick = (e) => {
-    const container = ReactDOM.findDOMNode(this.refs.container);
-    let target = e.target;
-    while(target.parentNode) {
-      if(target === container) { return; }
-      target = target.parentNode;
-    }
-
-    this.props.close(e);
-  };
+  closeOnOutsideClick = (e) => onOutsideClick(e, ReactDOM.findDOMNode(this.refs.container), this.props.close);
 
   render() {
     const {
@@ -79,7 +78,6 @@ export default class Menu extends Component {
       position,
       close,
       autoclose,
-      below,
       cascading,
       expanderIconChildren,
       expanderIconClassName,
@@ -87,6 +85,8 @@ export default class Menu extends Component {
     } = this.props;
 
     const items = isOpen && React.Children.map(children, (child, key) => {
+      if(!child) { return child; }
+
       return React.cloneElement(child, {
         key: child.key || key,
         onClick: (e) => {
@@ -114,7 +114,7 @@ export default class Menu extends Component {
         {isOpen &&
           <List
             ref="list"
-            className={classnames('md-menu', listClassName, `md-transition-${position}`, { below, cascading })}
+            className={classnames('md-menu', listClassName, `md-transition-${position}`, { cascading })}
             style={listStyle}
           >
             {items}

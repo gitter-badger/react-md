@@ -132,6 +132,7 @@ export default class TextField extends Component {
       required,
       helpOnFocus,
       fullWidth,
+      defaultValue,
       ...props,
     } = this.props;
     const value = this.getValue();

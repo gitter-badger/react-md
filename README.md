@@ -3,17 +3,17 @@
 React material design - React components built with sass (*oh no she didn't!*)
 
 ```bash
-$ npm install -S react \
-                 react-dom \
-                 react-addons-transition-group \
-                 react-addons-css-transition-group \
-                 react-addons-pure-render-mixin \
-                 react-md
+$ npm i -S react \
+           react-dom \
+           react-addons-transition-group \
+           react-addons-css-transition-group \
+           react-addons-pure-render-mixin \
+           react-md
 ```
 
 ## Documentation
 
-To view examples and component documentation, please view the [documentation website](http://mlaursen.com/react-md/)
+To view examples and component documentation, please view the [documentation website](http://react-md.mlaursen.com)
 
 # Getting Started
 
@@ -34,7 +34,7 @@ There are some mixins for helping pull these font libraries in from a cdn or loc
 
 ## Customizing the theme
 
-Hopefully the [generated sassdoc](https://mlaursen.com/react-md/sassdoc) will help with
+Hopefully the [generated sassdoc](https://react-md.mlaursen.com/sassdoc) will help with
 mixin usage and sass documentation.
 
 There is a sass function called `get-md-color($color, $hue, $secondary)` that can be used to set the primary and secondary colors for your application. It is based off of
@@ -63,7 +63,6 @@ See [the example \_media-queries.scss](../master/src/scss/_media-queries.scss) s
 
 * Scrollable tabs do not exist for desktop. Wasn't sure how to calculate it yet or set it up.
 * Autocomplete
-* Data Tables -- there is some starter css for tables in [\_data-tables.scss](../master/src/scss/components/_data-tables.scss) but no components with functionality.
 * Bottom sheets
 * Grid lists
 * Steppers
